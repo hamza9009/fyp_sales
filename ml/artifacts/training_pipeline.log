@@ -1,0 +1,77 @@
+2026-04-22T13:59:15 | INFO     | __main__ — Training logs will also be written to ml/artifacts/training_pipeline.log
+2026-04-22T13:59:16 | INFO     | ml.trainer — ============================================================
+2026-04-22T13:59:16 | INFO     | ml.trainer — PHASE 3 — ML TRAINING  (time-series CV tuning)
+2026-04-22T13:59:16 | INFO     | ml.trainer — ============================================================
+2026-04-22T13:59:16 | INFO     | ml.data_loader — Loading features from data/processed/features.parquet
+2026-04-22T13:59:16 | INFO     | ml.data_loader — Loaded 191674 rows × 23 cols | 2438 products | 2011-01-13 → 2011-12-09 | encoder classes: 2438
+2026-04-22T13:59:16 | INFO     | ml.trainer — Encoder saved → ml/artifacts/stock_code_encoder.joblib  (2438 classes)
+2026-04-22T13:59:16 | INFO     | ml.splitter — Time split (ratio=0.80) | cutoff=2011-10-06 | train=129320 rows (2097 products) | test=62354 rows (2305 products)
+2026-04-22T13:59:16 | INFO     | ml.trainer — --------------------------------------------------
+2026-04-22T13:59:16 | INFO     | ml.trainer — Training baseline: Naive (lag-1)
+2026-04-22T13:59:16 | INFO     | ml.models.naive — [Naive (lag-1)] fit() — no-op baseline
+2026-04-22T13:59:16 | INFO     | ml.evaluate — [Naive (lag-1)] MAE=24.4074  RMSE=81.9841
+2026-04-22T13:59:16 | INFO     | ml.registry — Saved model artifact → ml/artifacts/naive_model.joblib
+2026-04-22T13:59:16 | INFO     | ml.trainer — [Naive (lag-1)] 0.00 s | MAE=24.4074 RMSE=81.9841
+2026-04-22T13:59:16 | INFO     | ml.trainer — --------------------------------------------------
+2026-04-22T13:59:16 | INFO     | ml.trainer — Tuning: XGBoost
+2026-04-22T13:59:16 | INFO     | ml.tuning — [XGBoost] Starting randomized search | trials=30 | folds=5 | scoring=neg_root_mean_squared_error
+2026-04-22T14:06:13 | INFO     | ml.tuning — [XGBoost] Best CV RMSE=60.2076 | params={'subsample': 1.0, 'reg_lambda': 1.0, 'reg_alpha': 0.5, 'n_estimators': 1500, 'min_child_weight': 3, 'max_depth': 5, 'learning_rate': 0.03, 'gamma': 0.05, 'colsample_bytree': 0.9}
+2026-04-22T14:06:13 | INFO     | ml.models.xgboost_model — [XGBoost] Training on 129320 rows × 18 features (log_transform=True)
+2026-04-22T14:06:14 | INFO     | ml.models.xgboost_model — [XGBoost] Training complete | selected_n_estimators=78
+2026-04-22T14:06:14 | INFO     | ml.evaluate — [XGBoost] MAE=16.8358  RMSE=63.6993
+2026-04-22T14:06:14 | INFO     | ml.registry — Saved model artifact → ml/artifacts/xgboost_model.joblib
+2026-04-22T14:06:14 | INFO     | ml.trainer — [XGBoost] 0.82 s | MAE=16.8358 RMSE=63.6993
+2026-04-22T14:06:14 | INFO     | ml.trainer — --------------------------------------------------
+2026-04-22T14:06:14 | INFO     | ml.trainer — Tuning: LightGBM
+2026-04-22T14:06:14 | INFO     | ml.tuning — [LightGBM] Starting randomized search | trials=30 | folds=5 | scoring=neg_root_mean_squared_error
+2026-04-22T14:12:38 | INFO     | ml.tuning — [LightGBM] Best CV RMSE=60.2357 | params={'subsample': 1.0, 'reg_lambda': 0.5, 'reg_alpha': 0.5, 'num_leaves': 127, 'n_estimators': 500, 'min_child_samples': 20, 'max_depth': 8, 'learning_rate': 0.03, 'colsample_bytree': 0.9}
+2026-04-22T14:12:38 | INFO     | ml.models.lightgbm_model — [LightGBM] Training on 129320 rows × 18 features (log_transform=True)
+2026-04-22T14:12:40 | INFO     | ml.models.lightgbm_model — [LightGBM] Training complete | selected_n_estimators=68
+2026-04-22T14:12:40 | INFO     | ml.evaluate — [LightGBM] MAE=16.7978  RMSE=63.5613
+2026-04-22T14:12:40 | INFO     | ml.registry — Saved model artifact → ml/artifacts/lightgbm_model.joblib
+2026-04-22T14:12:40 | INFO     | ml.trainer — [LightGBM] 1.51 s | MAE=16.7978 RMSE=63.5613
+2026-04-22T14:12:40 | INFO     | ml.trainer — --------------------------------------------------
+2026-04-22T14:12:40 | INFO     | ml.trainer — Tuning: CatBoost
+2026-04-22T14:12:40 | INFO     | ml.tuning — [CatBoost] Starting randomized search | trials=30 | folds=5 | scoring=neg_root_mean_squared_error
+2026-04-22T14:53:39 | INFO     | __main__ — Training logs will also be written to ml/artifacts/training_pipeline.log
+2026-04-22T14:53:40 | INFO     | ml.trainer — ============================================================
+2026-04-22T14:53:40 | INFO     | ml.trainer — PHASE 3 — ML TRAINING  (time-series CV tuning)
+2026-04-22T14:53:40 | INFO     | ml.trainer — ============================================================
+2026-04-22T14:53:40 | INFO     | ml.data_loader — Loading features from data/processed/features.parquet
+2026-04-22T14:53:40 | INFO     | ml.data_loader — Loaded 191674 rows × 23 cols | 2438 products | 2011-01-13 → 2011-12-09 | encoder classes: 2438
+2026-04-22T14:53:40 | INFO     | ml.trainer — Encoder saved → ml/artifacts/stock_code_encoder.joblib  (2438 classes)
+2026-04-22T14:53:40 | INFO     | ml.splitter — Time split (ratio=0.80) | cutoff=2011-10-06 | train=129320 rows (2097 products) | test=62354 rows (2305 products)
+2026-04-22T14:53:40 | INFO     | ml.trainer — --------------------------------------------------
+2026-04-22T14:53:40 | INFO     | ml.trainer — Tuning: XGBoost
+2026-04-22T14:53:40 | INFO     | ml.tuning — [XGBoost] Starting randomized search | trials=20 | folds=5 | scoring=neg_root_mean_squared_error
+2026-04-22T14:58:42 | INFO     | ml.tuning — [XGBoost] Best CV RMSE=60.4135 | params={'subsample': 0.9, 'reg_lambda': 1.0, 'reg_alpha': 0.1, 'n_estimators': 200, 'min_child_weight': 3, 'max_depth': 9, 'learning_rate': 0.1, 'gamma': 0.05, 'colsample_bytree': 0.8}
+2026-04-22T14:58:42 | INFO     | ml.models.xgboost_model — [XGBoost] Training on 129320 rows × 19 features (log_transform=True)
+2026-04-22T14:58:43 | INFO     | ml.models.xgboost_model — [XGBoost] Training complete | selected_n_estimators=21
+2026-04-22T14:58:43 | INFO     | ml.evaluate — [XGBoost] MAE=17.2429  RMSE=63.6605
+2026-04-22T14:58:43 | INFO     | ml.registry — Saved model artifact → ml/artifacts/xgboost_model.joblib
+2026-04-22T14:58:43 | INFO     | ml.trainer — [XGBoost] 0.97 s | MAE=17.2429 RMSE=63.6605
+2026-04-22T14:58:43 | INFO     | ml.trainer — --------------------------------------------------
+2026-04-22T14:58:43 | INFO     | ml.trainer — Tuning: LightGBM
+2026-04-22T14:58:43 | INFO     | ml.tuning — [LightGBM] Starting randomized search | trials=20 | folds=5 | scoring=neg_root_mean_squared_error
+2026-04-22T15:03:47 | INFO     | ml.tuning — [LightGBM] Best CV RMSE=60.3964 | params={'subsample': 0.7, 'reg_lambda': 1.0, 'reg_alpha': 1.0, 'num_leaves': 63, 'n_estimators': 1000, 'min_child_samples': 100, 'max_depth': 5, 'learning_rate': 0.03, 'colsample_bytree': 0.8}
+2026-04-22T15:03:47 | INFO     | ml.models.lightgbm_model — [LightGBM] Training on 129320 rows × 19 features (log_transform=True)
+2026-04-22T15:03:48 | INFO     | ml.models.lightgbm_model — [LightGBM] Training complete | selected_n_estimators=130
+2026-04-22T15:03:48 | INFO     | ml.evaluate — [LightGBM] MAE=17.1193  RMSE=63.5955
+2026-04-22T15:03:48 | INFO     | ml.registry — Saved model artifact → ml/artifacts/lightgbm_model.joblib
+2026-04-22T15:03:48 | INFO     | ml.trainer — [LightGBM] 1.54 s | MAE=17.1193 RMSE=63.5955
+2026-04-22T15:03:48 | INFO     | ml.trainer — --------------------------------------------------
+2026-04-22T15:03:48 | INFO     | ml.evaluate — [LightGBM + XGBoost Ensemble] MAE=17.1254  RMSE=63.5986
+2026-04-22T15:03:48 | INFO     | ml.registry — Saved model artifact → ml/artifacts/lightgbm_xgboost_ensemble.joblib
+2026-04-22T15:03:48 | INFO     | ml.trainer — [LightGBM + XGBoost Ensemble] 2.52 s | MAE=17.1254 RMSE=63.5986
+2026-04-22T15:03:48 | INFO     | ml.evaluate — Model comparison (sorted by RMSE):
+ rank                       model     mae    rmse  best
+    1                    LightGBM 17.1193 63.5955  True
+    2 LightGBM + XGBoost Ensemble 17.1254 63.5986 False
+    3                     XGBoost 17.2429 63.6605 False
+2026-04-22T15:03:48 | INFO     | ml.trainer — ============================================================
+2026-04-22T15:03:48 | INFO     | ml.trainer — BEST MODEL: LightGBM  (RMSE=63.5955  MAE=17.1193)
+2026-04-22T15:03:48 | INFO     | ml.trainer — ============================================================
+2026-04-22T15:03:49 | INFO     | ml.registry — Saved model artifact → ml/artifacts/best_model.joblib
+2026-04-22T15:03:49 | INFO     | ml.registry — Saved JSON artifact → ml/artifacts/metrics_report.json
+2026-04-22T15:03:49 | INFO     | ml.registry — Saved JSON artifact → ml/artifacts/feature_importance.json
+2026-04-22T15:03:49 | INFO     | ml.trainer — PHASE 3 COMPLETE — artifacts in ml/artifacts

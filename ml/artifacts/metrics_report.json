@@ -1,0 +1,93 @@
+{
+  "split": {
+    "cutoff_date": "2011-10-06",
+    "train_rows": 129320,
+    "test_rows": 62354,
+    "train_products": 2097,
+    "test_products": 2305,
+    "cv_splits": 5
+  },
+  "models": {
+    "XGBoost": {
+      "mae": 17.2429,
+      "rmse": 63.6605,
+      "train_time_sec": 0.973,
+      "cv_rmse": 60.4135,
+      "cv_splits": 5,
+      "cv_search_iterations": 20,
+      "selection_metric": "neg_root_mean_squared_error",
+      "tuned_params": {
+        "subsample": 0.9,
+        "reg_lambda": 1.0,
+        "reg_alpha": 0.1,
+        "n_estimators": 200,
+        "min_child_weight": 3,
+        "max_depth": 9,
+        "learning_rate": 0.1,
+        "gamma": 0.05,
+        "colsample_bytree": 0.8
+      },
+      "refit_details": {
+        "used_early_stopping": true,
+        "validation_rows": 12932,
+        "selected_n_estimators": 21
+      }
+    },
+    "LightGBM": {
+      "mae": 17.1193,
+      "rmse": 63.5955,
+      "train_time_sec": 1.542,
+      "cv_rmse": 60.3964,
+      "cv_splits": 5,
+      "cv_search_iterations": 20,
+      "selection_metric": "neg_root_mean_squared_error",
+      "tuned_params": {
+        "subsample": 0.7,
+        "reg_lambda": 1.0,
+        "reg_alpha": 1.0,
+        "num_leaves": 63,
+        "n_estimators": 1000,
+        "min_child_samples": 100,
+        "max_depth": 5,
+        "learning_rate": 0.03,
+        "colsample_bytree": 0.8
+      },
+      "refit_details": {
+        "used_early_stopping": true,
+        "validation_rows": 12932,
+        "selected_n_estimators": 130
+      }
+    },
+    "LightGBM + XGBoost Ensemble": {
+      "mae": 17.1254,
+      "rmse": 63.5986,
+      "train_time_sec": 2.515,
+      "cv_rmse": null,
+      "cv_splits": 5,
+      "cv_search_iterations": 20,
+      "selection_metric": "neg_root_mean_squared_error",
+      "tuned_params": {
+        "strategy": "mean_average",
+        "components": [
+          "LightGBM",
+          "XGBoost"
+        ]
+      },
+      "refit_details": {
+        "component_count": 2,
+        "averaging_method": "mean"
+      }
+    }
+  },
+  "best_model": "LightGBM",
+  "optimisations": [
+    "Untouched final test set held out by latest dates only",
+    "RandomizedSearchCV on training window only (20 trials, 5 time-based folds)",
+    "Primary model-selection metric: neg_root_mean_squared_error",
+    "Smoothed stock-code target encoding added on top of label encoding inside each boosted model",
+    "LightGBM objective switched to regression_l1 for better robustness to outliers",
+    "Chronological internal validation used only during final boosted-model refits",
+    "Final boosted models retrained on the full training window using early-stopped round counts",
+    "LightGBM + XGBoost ensemble evaluated by averaging component predictions on the untouched test set"
+  ]
+}
